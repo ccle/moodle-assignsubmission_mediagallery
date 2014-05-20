@@ -29,3 +29,5 @@ $plugin->version   = 2014040800;
 $plugin->requires  = 2013050100;
 $plugin->component = 'assignsubmission_mediagallery';
 $plugin->dependencies = array('mod_mediagallery' => 2014010400);
+$plugin->maturity = MATURITY_STABLE;
+$plugin->release = '2.5.1.0';
