@@ -170,7 +170,8 @@ class assign_submission_mediagallery extends assign_submission_plugin {
         $url = null;
         $record = $this->get_mediagallery_submission($submission->id);
 
-        if (!isset($record->galleryid) || !($galrecord = $DB->get_record('mediagallery_gallery', array('id' => $record->galleryid)))) {
+        if (!isset($record->galleryid) ||
+            !($galrecord = $DB->get_record('mediagallery_gallery', array('id' => $record->galleryid)))) {
             return '';
         }
         $gallery = new \mod_mediagallery\gallery($galrecord);
