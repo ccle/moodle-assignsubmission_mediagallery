@@ -73,14 +73,16 @@ class assign_submission_mediagallery extends assign_submission_plugin {
     public function get_settings(MoodleQuickForm $mform) {
         global $CFG, $COURSE, $DB;
 
-        $options = $DB->get_records_menu('mediagallery', array('course' => $COURSE->id), 'name ASC', 'id, name');
+        $select = "colltype IN ('assignment', 'peerreviewed') AND course = :course";
+        $options = $DB->get_records_select_menu('mediagallery', $select, array('course' => $COURSE->id), 'name ASC', 'id, name');
         $mform->addElement('select', 'assignsubmission_mediagallery_mg',
             get_string('mediagallery', 'assignsubmission_mediagallery'), $options);
         $mform->setDefault('assignsubmission_mediagallery_mg', $this->get_config('mediagallery'));
         $mform->disabledIf('assignsubmission_mediagallery_mg',
                            'assignsubmission_mediagallery_enabled',
                            'notchecked');
-
+        $mform->disabledIf('assignsubmission_mediagallery_enabled',
+            'assignsubmission_mediagallery_mg', 'eq', '');
     }
 
     /**
@@ -111,7 +113,7 @@ class assign_submission_mediagallery extends assign_submission_plugin {
         $mg = $this->get_config('mediagallery');
         try {
             $collection = new \mod_mediagallery\collection($mg);
-            $options = array();
+            $options = array('' => get_string('makeaselection', 'assignsubmission_mediagallery'));
             foreach ($collection->get_my_galleries() as $gallery) {
                 $options[$gallery->id] = $gallery->name;
             }
@@ -143,6 +145,13 @@ class assign_submission_mediagallery extends assign_submission_plugin {
         global $USER, $DB;
 
         if (empty($data->galleryid)) {
+            $err = get_string('errornoselection', 'assignsubmission_mediagallery');
+            $err .= html_writer::empty_tag('br');
+            $mg = $this->get_config('mediagallery');
+            $url = new moodle_url('/mod/mediagallery/view.php', array('m' => $mg));
+            $err .= ' '.html_writer::link($url, get_string('createagallery', 'assignsubmission_mediagallery'));
+
+            $this->set_error($err);
             return false;
         }
 
@@ -170,8 +179,7 @@ class assign_submission_mediagallery extends assign_submission_plugin {
         $url = null;
         $record = $this->get_mediagallery_submission($submission->id);
 
-        if (!isset($record->galleryid) ||
-            !($galrecord = $DB->get_record('mediagallery_gallery', array('id' => $record->galleryid)))) {
+        if (!isset($record->galleryid) || !($galrecord = $DB->get_record('mediagallery_gallery', array('id' => $record->galleryid)))) {
             return '';
         }
         $gallery = new \mod_mediagallery\gallery($galrecord);
