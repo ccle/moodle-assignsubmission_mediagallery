@@ -78,9 +78,14 @@ class assign_submission_mediagallery extends assign_submission_plugin {
         $mform->addElement('select', 'assignsubmission_mediagallery_mg',
             get_string('mediagallery', 'assignsubmission_mediagallery'), $options);
         $mform->setDefault('assignsubmission_mediagallery_mg', $this->get_config('mediagallery'));
-        $mform->disabledIf('assignsubmission_mediagallery_mg',
+        // START UCLA MOD: CCLE-7189 - Converted js functionality to Jquery for simplify assignment settings
+        // $mform->disabledIf('assignsubmission_mediagallery_mg',
+        //                    'assignsubmission_mediagallery_enabled',
+        //                    'notchecked');
+        $mform->hideIf('assignsubmission_mediagallery_mg',
                            'assignsubmission_mediagallery_enabled',
                            'notchecked');
+        // END UCLA MOD: CCLE-7189
         $mform->disabledIf('assignsubmission_mediagallery_enabled',
             'assignsubmission_mediagallery_mg', 'eq', '');
     }
