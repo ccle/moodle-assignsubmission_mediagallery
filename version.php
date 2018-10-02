@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2014112700;
+$plugin->version   = 2018100200;
 $plugin->requires  = 2013050100;
 $plugin->component = 'assignsubmission_mediagallery';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '2.7.1.0';
+$plugin->release = '2.7.1.1';
 $plugin->dependencies = array('mod_mediagallery' => 2014112500);
