@@ -18,16 +18,16 @@
  * This file contains the version information for the mediagallery submission plugin
  *
  * @package    assignsubmission_mediagallery
- * @copyright  2014 NetSpot {@link http://www.netspot.com.au}
- * @author     Adam Olley <adam.olley@netspot.com.au>
+ * @copyright  2018 Blackboard Inc. {@link https://www.blackboard.com}
+ * @author     Adam Olley <adam.olley@blackboard.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2018100200;
+$plugin->version   = 2018100400;
 $plugin->requires  = 2013050100;
 $plugin->component = 'assignsubmission_mediagallery';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '2.7.1.1';
+$plugin->release = '2.7.1.2';
 $plugin->dependencies = array('mod_mediagallery' => 2014112500);
