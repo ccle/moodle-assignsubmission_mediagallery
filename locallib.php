@@ -246,6 +246,21 @@ class assign_submission_mediagallery extends assign_submission_plugin {
     }
 
     /**
+     * Remove a submission.
+     *
+     * @param stdClass $submission The submission
+     * @return boolean
+     */
+    public function remove(stdClass $submission) {
+        global $DB;
+
+        $DB->delete_records('assignsubmission_mg',
+                            array('submission' => $submission->id));
+
+        return true;
+    }
+
+    /**
      * Return true if there is no submitted gallery (or gallery was deleted).
      * @param stdClass $submission
      */
